@@ -159,7 +159,7 @@ function ProductInfo() {
               product.showBidsOnProductPage &&
               product?.bids?.map((bid) =>{
                 return ( 
-                <div className="border border-gray-300 border-solid p-3 rounded">
+                <div key={bid.id} className="border border-gray-300 border-solid p-3 rounded">
                   <div className="flex justify-between text-gray-700">
                     <span>Name</span>
                     <span>{bid.buyer.name}</span>

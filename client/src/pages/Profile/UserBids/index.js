@@ -84,7 +84,7 @@ function UserBids() {
 
   return (
     <div className="flex gap-3 flex-col">
-      <Table columns={columns} dataSource={bidsData} />
+      <Table columns={columns} dataSource={bidsData} rowKey={(record) => record.id} />
     </div>
   );
 }

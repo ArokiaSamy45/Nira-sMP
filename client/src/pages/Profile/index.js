@@ -5,18 +5,20 @@ import UserBids from './UserBids';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 
+
 function Profile() {
   const {user} = useSelector((state) => state.users);
+  const { TabPane } = Tabs;
   return (
     <div>
       <Tabs defaultActiveKey='1'>
-        <Tabs.TabPane tab="Products" key="1">
+        <TabPane tab="Products" key="1">
           <Products />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="My Bids" key="2">
+        </TabPane>
+        <TabPane tab="My Bids" key="2">
           <UserBids />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="General" key="3">
+        </TabPane>
+        <TabPane tab="General" key="3">
         <div className='flex flex-col w-1/3'>
           <span className=" text-xl flex justify-between">
             Name: <span className='text-xl'>{user.name}</span></span>
@@ -25,7 +27,7 @@ function Profile() {
             <span className=" text-xl flex justify-between">
             Created At:{" "} <span className='text-xl'>{moment(user.createdAt).format("MMM D , YYYY hh:mm A")}</span></span>
         </div>
-        </Tabs.TabPane>
+        </TabPane>
       </Tabs>
     </div>
   )

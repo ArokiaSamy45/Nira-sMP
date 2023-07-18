@@ -107,7 +107,7 @@ const [users, setUsers] = React.useState([]);
 
   return (
     <div>
-      <Table columns={columns} dataSource={users} />
+      <Table columns={columns} dataSource={users} rowKey={(record) => record.id} />
     </div>
   );
 }

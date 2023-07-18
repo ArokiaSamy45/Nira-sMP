@@ -141,7 +141,7 @@ function Products() {
 
   return (
     <div>
-      <Table columns={columns} dataSource={products} />
+      <Table columns={columns} dataSource={products} rowKey={(record) => record.id} />
     </div>
   );
 }

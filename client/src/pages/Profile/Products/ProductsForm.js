@@ -1,3 +1,4 @@
+
 import { Col, Form, Input, Modal, Row, Tabs, message } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -70,6 +71,8 @@ if(selectedProduct){
 }
 },[selectedProduct]);
 
+const { TabPane } = Tabs;
+
   return (
     <Modal
       title=""
@@ -91,7 +94,7 @@ if(selectedProduct){
       activeKey = {selectedTab}
       onChange={(key) => setSelectedTab(key)}
       >
-        <Tabs.TabPane tab="General" key="1">
+        <TabPane tab="General" key="1">
           <Form layout="vertical" ref={formRef} onFinish={onFinish}>
             <Form.Item label="Name" name="name" rules={rules}>
               <Input type="text" />
@@ -167,12 +170,12 @@ if(selectedProduct){
                     />
                   </Form.Item>
           </Form>
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Images" key="2" disabled={!selectedProduct}>
+        </TabPane>
+        <TabPane tab="Images" key="2" disabled={!selectedProduct}>
           <Images selectedProduct={selectedProduct} getData={getData} 
           setShowProductForm={setShowProductForm}
           />
-        </Tabs.TabPane>
+        </TabPane>
       </Tabs>
       </div>
     </Modal>

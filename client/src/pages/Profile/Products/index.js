@@ -136,7 +136,7 @@ function Products() {
           Add Product
         </Button>
       </div>
-      <Table columns={columns} dataSource={products} />
+      <Table columns={columns} dataSource={products} rowKey={(record) => record.id} />
       {showProductForm && (
         <ProductsForm
           showProductForm={showProductForm}

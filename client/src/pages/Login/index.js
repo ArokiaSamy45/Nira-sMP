@@ -44,7 +44,7 @@ function Login() {
   return (
     <div
     className='h-screen bg-primary flex justify-center items-center'>
-        <div className='bg-white p-5 rounded w-[450px]'>
+        <div className='bg-white p-5 rounded w-[350px]'>
             <h1 className='text-primary text-2xl'>NIRA's Market - <span className='text-gray-400 text-2xl '>LOGIN</span></h1>
           <Divider/>
            <Form
@@ -57,6 +57,9 @@ function Login() {
             <Form.Item label='Password' name='password' rules={rules}>
                 <Input type="password" placeholder='Password'/>
             </Form.Item>
+            <p className="forgot-password text-right">
+          Forgot <a href="/reset">password?</a>
+        </p>
             <Button type="primary" htmlType="submit" block className='mt-2'>Login</Button>
          <div className='mt-5 text-center'>
          <span className='text-gray-500'>Don't have an account? <Link to="/register">Register</Link></span>

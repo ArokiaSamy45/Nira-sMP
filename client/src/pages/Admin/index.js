@@ -5,6 +5,7 @@ import Users from './Users'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 
+
 function Admin() {
 
   const navigate = useNavigate();
@@ -14,16 +15,17 @@ function Admin() {
       navigate("/");
     }
   },[])
+  const { TabPane } = Tabs;
 
   return (
     <div>
         <Tabs>
-            <Tabs.TabPane tab="Products" key="1">
+            <TabPane tab="Products" key="1">
                <Products/>
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Users" key="2">
+            </TabPane>
+            <TabPane tab="Users" key="2">
                <Users/>
-            </Tabs.TabPane>
+            </TabPane>
         </Tabs>
     </div>
   )

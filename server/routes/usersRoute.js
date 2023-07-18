@@ -1,9 +1,14 @@
 const router = require("express").Router();
+const express = require("express");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const authMiddleware = require("../middlewares/authMiddleware");
 
+
+
+router.use(express.urlencoded({extended: false}));
+const jwt = require("jsonwebtoken");
+var nodemailer = require("nodemailer");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 //New User Registration
 router.post("/register", async (req, res) => {
@@ -107,6 +112,98 @@ router.get('/get-users', authMiddleware, async (req, res) => {
     });
   }
 });
+
+
+//forgot-password
+router.post('/forgot-password', async (req, res) => {
+  const {email} = req.body;
+  try {
+    const user = await User.findOne({email});
+    if (!user) {
+      return res.json({ status: "User not found" });
+    }
+    const secret = process.env.JWT_SECRET + user.password;
+    const token = jwt.sign({ email: user.email, id: user._id }, secret, { expiresIn: "5m" });
+    const link = `http://localhost:5000/api/users/reset-password/${user._id}/${token}`;
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+    var mailOptions = {
+      from: 'yourgmail@gmail.com',
+      to: email,
+      subject: 'Sending Email using Node.js',
+      text: link,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    console.log(link);
+    res.json({ status: "Email sent successfully" });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+
+//reset-password
+router.get('/reset-password/:id/:token', async (req, res) => {
+  const { id, token } = req.params;
+  console.log(req.params);
+  const user = await User.findOne({ _id: id }); // Corrected the query to use _id instead of id
+  if (!user || !token) {
+    return res.json({ status: "User not exists" }); // Changed the response message
+  }
+  const secret = process.env.JWT_SECRET + user.password;
+  try {
+    const verify = jwt.verify(token, secret);
+    res.render("index", { email: verify.email, id: id, token: token});
+  } catch (error) {
+    res.send("Token verification failed"); // Changed the response message
+  }
+});
+
+//password-update
+router.post('/reset-password/:id/:token', async (req, res) => {
+  const { id, token } = req.params;
+  const { password } = req.body;
+  const user = await User.findOne({ _id: id });
+  if (!user) {
+    return res.json({ status: "User not exists" });
+  }
+  const secret = process.env.JWT_SECRET + user.password;
+  try {
+    const verify = jwt.verify(token, secret);
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    await User.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          password: encryptedPassword,
+        },
+      }
+    );
+    res.redirect('http://localhost:3000/login');
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "Something went wrong" });
+  }
+});
+
+
+
 
 
 //update user status

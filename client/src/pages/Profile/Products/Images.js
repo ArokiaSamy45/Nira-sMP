@@ -56,9 +56,9 @@ function Images({ selectedProduct, setShowProductForm, getData }) {
   return (
     <div>
       <div className="flex gap-5 mb-5">
-        {images.map((image) => {
+        {images.map((image, index) => {
           return (
-            <div className="flex gap-2 border border-solid border-gray-500-rounded p-3 items-end">
+            <div key={index} className="flex gap-2 border border-solid border-gray-500-rounded p-3 items-end">
               <img className="h-20 w-20 object-cover" src={image} alt="" />
               <i
                 className="ri-delete-bin-line"

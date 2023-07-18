@@ -44,6 +44,17 @@ export const GetAllUsers = async () => {
   }
 }
 
+
+//forgot-password
+export const ForgotPasswords = async (email) => {
+  try {
+    const response = await axiosInstance.post('api/users/forgot-password', {email});
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
+
 //update user status
 export const UpdateUserStatus = async (id, status) => {
   try {

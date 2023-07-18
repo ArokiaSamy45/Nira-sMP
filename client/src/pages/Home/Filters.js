@@ -59,17 +59,17 @@ function Filters({
     <div className='w-72'>
         <div className='flex justify-between '>
         <h1 className='text-indigo-900 text-xl'>Filters</h1>
-        <i class="ri-close-fill text-xl cursor-pointer" onClick={() => setShowFilters(!showFilters)}></i>
+        <i className="ri-close-fill text-xl cursor-pointer" onClick={() => setShowFilters(!showFilters)}></i>
         </div>
         
         <div className='flex flex-col gap-1 mt-5'>
             <h1 className='text-gray-600'>Categories</h1>
             <div className='flex flex-col'>
-                {categories.map((category) => {
+                {categories.map((category, index) => {
 return (
 
 
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-2' key={index}>
                 <Input
                 type="checkbox"
                 name="category"
@@ -100,9 +100,9 @@ return (
             <h1 className="text-gray-600 mt-5">Ages</h1>
 
 <div className="flex flex-col">
-  {ages.map((age) => {
+  {ages.map((age, index) => {
     return (
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center" key={index}>
         <input
           type="checkbox"
           name="age"

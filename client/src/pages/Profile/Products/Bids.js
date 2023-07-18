@@ -86,7 +86,7 @@ useEffect(() => {
         <h1 className="text-xl text-gray-500">
             Product Name: {selectedProduct.name} </h1>
 
-            <Table columns={columns} dataSource={bidsData} />
+            <Table columns={columns} dataSource={bidsData} rowKey={(record) => record.id} />
         </div>
     </Modal>
   );
